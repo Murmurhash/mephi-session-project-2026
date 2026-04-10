@@ -1,0 +1,132 @@
+    1  nmcli connection show
+    2  ip a
+    3  mncli connection modify "enp0s1" ipv4.addresses 192.168.1.100/24
+    4  nmcli connection modify "enp0s1" ipv4.addresses 192.168.1.100/24
+    5  nmcli connection modify "enp0s1" ipv4.gateway 192.168.1.1
+    6  nmcli connection modify "enp0s1" ipv4.dns 8.8.8.8
+    7  nmcli connection modify "enp0s1" ipv4.method manual
+    8  nmcli connection modify "enp0s1" connection.autoconnect yes
+    9  hostnamectl set-hostname mephi-2026.domain.local
+   10  nmcli connection up "enp0s1"
+   11  ip a
+   12  ip route
+   13  hostnamectl
+   14  ping -c 4 8.8.8.8
+   15  ping -c 4 192.168.1.1
+   16  ping -c 4 8.8.8.8 /tmp/network_check.txt
+   17  ping -c 4 8.8.8.8 >  /tmp/network_check.txt
+   18  ping -c 4 192.168.1.1 >>  /tmp/network_check.txt
+   19  cat /tmp/network_check.txt
+   20  dnf install -y nginx
+   21  dnf install -y tcpdump
+   22  dnf install -y libcap-ng-utils
+   23  cd /tmp
+   24  dnf download tcpdump
+   25  ls -l /tmp/tcpdump*.rpm
+   26  rpm -Uvh --replacekgs /tmp/tcpdump-*.rpm
+   27  rpm -Uvh --replacepkgs /tmp/tcpdump-*.rpm
+   28  rpm -q nginx
+   29  rpm -q tcpdump
+   30  which getcap
+   31  lsblk
+   32  parted -s /dev/vdb/ mklabel gpt
+   33  parted -s /dev/vdb mklabel gpt
+   34  parted -s /dev/vdb mkpart primary ext4 1Mib 100%
+   35  partrobe /dev/vdb
+   36  lsblk
+   37  mkfs.ext4 -L MEPHI_DATA /dev/vdb1
+   38  blkid /dev/vdb1
+   39  mkdir -p /data/mephi-web
+   40  cp /etc/fstab /etc/fstab.bak
+   41  echo 'LABEL-MEPHI_DATA /data/mephi-web ext4 defaults 0 2' >> /etc/fstab
+   42  tail -n 5 /etc/fstab
+   43  mount -a
+   44  lsblk
+   45  blkid /dev/vdb1
+   46  cat /etc/fstab
+   47  systemctl daemon-reload
+   48  mount -a
+   49  dmesg | tail -n 20
+   50  lsblk -f
+   51  blkid
+   52  cat /etc/fstab
+   53  sed -i 's/^LABEL-MEPHI_DATA /LABEL=MEPHI_DATA /' /etc/fstab
+   54  cat /etc/fstab
+   55  systemctl daemon-reload
+   56  mount -a
+   57  mount | grep mephi-web
+   58  df -h
+   59  systemctl start nginx
+   60  systemctl enable nginx
+   61  systemctl is-active nginx
+   62  systemctl is-enabled nginx
+   63  journalctl -u -nginx --since "5 minutes ago" > /tmp/nginx_recent_logs.txt
+   64  cat /tmp/nginx_recent_logs.txt
+   65  groupadd mephi-devs
+   66  useradd -m mephi-admin
+   67  usermod -aG mephi-devs mephi-admnin
+   68  usermod -aG mephi-devs mephi-admin
+   69  echo 'mephi-admin:P@ssw0rd2026' | chpasswd
+   70  chown mephi-admin:mephi-devs /data/mephi-web
+   71  chmod 2775 /data/mephi/web
+   72  chmod 2775 /data/mephi-web
+   73  id mephi-admin
+   74  getent group mephi-devs
+   75  ls -ld /data/mephi-web
+   76  getenforce
+   77  semanage fcontext -a -t httpd_sys_content_t "/data/mephi-web(/.*)?"
+   78  restorecon -Rv /data/mephi-web
+   79  ls -Zd /data/mephi0web
+   80  ls -Zd /data/mephi-web
+   81  chmod u-s /usr/sbin/tcpdump
+   82  setcap cap_net_raw,cap_net_admin+ep /usr/sbin/tcpdump
+   83  getcap /usr/sbin/tcpdump
+   84  su - mephi-admin -c 'tcpdump --help'
+   85  echo root > /etc/ssh/denied_users
+   86  cat /etc/ssh/denied_users
+   87  cp /etc/pam.d/login /etc/pam.d/login.bak
+   88  nano etc/pam.d/login
+   89  head -n 5 /etc/pam.d/login
+   90  cp /etc/pam.d/login /etc/pam.d/login.bak2
+   91  nano /etc/pam.d/login
+   92  head -n 5 /etc/pam.d/login
+   93  nano /etc/ssh/sshd_config
+   94  grep -n PermitRootLogin /etc/ssh/sshd_config
+   95  nano /etc/ssh/sshd_config
+   96* 
+   97  systemctl restart sshd
+   98  systemctl is-active sshd
+   99  su - mephi-admin -c 'echo "Hello from Student: M255955" > /data/mephi-web/index.html
+su - mephi-admin -c 'echo "Hello from Student: M255955" > /data/mephi-web/index.html'
+  100  su - mephi-admin -c 'echo "Hello from Student: M255955" > /data/mephi-web/index.html'
+  101  cat /data/mephi-web/index,html
+  102  cat /data/mephi-web/index.html
+  103  curl http://localhost
+  104  curl http://192.168.1.100
+  105  clear
+  106  cat /data/mephi-web/index.html
+  107  curl http://localhost
+  108  curl http://192.168.1.100
+  109  nano /etc/nginx/nginx.conf
+  110  nginx -t
+  111  systemctl restart nginx
+  112  curl http://localhost
+  113  curl http://192.168.1.100
+  114  history > ~project_history.txt
+  115  ping -c 4 192.168.1.1 > ~network_check.txt
+  116  ping -c 4 8.8.8.8 >> ~network_check.txt
+  117  journalctl -u nginx --since "5 minutes ago" > ~/nginx_recent_logs.txt
+  118  cp /etc/fstab ~/fstab.txt
+  119  getenforce > ~selinux_status.txt
+  120  ls -Zd /data/mephi-web > ~/file_contexts.txt
+  121  getcap /usr/sbin/tcpdump > ~/tcpdump_capabilities.txt
+  122  stat /data/mephi-web > ~/permissions.txt
+  123  id mephi-admin > ~/users_groups.txt
+  124  getent group mephi-devs >> ~/users_groups.txt
+  125  cp /data/mephi-web/index.htmml ~index.html
+  126  cp /data/mephi-web/index.htmml ~/index.html
+  127  cp /data/mephi-web/index.html ~/index.html
+  128  curl -s http://192.168.1.100 > ~/curl_output.txt
+  129  cp /tmp/tcpdump-*.rpm ~/
+  130  ls -l ~
+  131  history > ~/project_history.txt
